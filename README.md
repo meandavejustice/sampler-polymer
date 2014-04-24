@@ -32,8 +32,9 @@ window.addEventListener('polymer-ready', function(evt) {
 An event listener is already bound to click for each `<audio-pad>` element.
 
 ## Contributing
-Take a look at the [issues](https://github.com/meandavejustice/sample-polymer/issues)
-to run locally:
+Take a look at the [issues](https://github.com/meandavejustice/sample-polymer/issues).
+
+Running locally:
 * `bower install`
 * `python -m SimpleHTTPServer`
 * visit [http://localhost:8000/example/index.html](http://localhost:8180/example/index.html)
