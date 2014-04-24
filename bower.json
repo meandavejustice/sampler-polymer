@@ -1,8 +1,31 @@
 {
   "name": "sampler-polymer",
+  "version": "0.1",
+  "homepage": "https://github.com/meandavejustice/sampler-polymer",
+  "authors": [
+    "David Adam Justice <davejustishh@gmail.com>"
+  ],
+  "description": "audio sample polymer element",
+  "main": "audio-pad.html",
+  "keywords": [
+    "audio",
+    "webaudio",
+    "polymer",
+    "web-components",
+    "mpc",
+    "sampling",
+    "sampler",
+    "pad"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "dependencies": {
-    "mousetrap": "~1.4.4",
-    "polymer": "~0.2.2",
-    "polymer-ajax": "Polymer/polymer-ajax#~0.2.3"
+    "polymer": "Polymer/polymer#~0.2.3"
   }
 }
