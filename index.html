@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Audio pad polymer element example</title>
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="bower_components/highlightjs/styles/monokai.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="style.css">
+
+        <script type="text/javascript" src="bower_components/platform/platform.js"></script>
+        <link rel="import" href="audio-pad.html" />
+    </head>
+    <body>
+      <div class="container">
+        <h1>Sample-Polymer</h1>
+        <aside>Sample-polymer provides a web-component called "audio-pad" which can be used to create
+web-audio apps. It has been modelled after the original designs of Akai's Mpc line. But can easily be modified to look/act however you want.</aside>
+            <audio-pad></audio-pad>
+            <audio-pad></audio-pad>
+            <audio-pad></audio-pad>
+            <audio-pad></audio-pad>
+            <h4 class="state"></h4>
+
+            <br />
+            <br />
+            <p>Simply import the element</p>
+            <pre>
+              <code class="language-html">
+                    &lt;script type="text/javascript" src="../bower_components/platform/platform.js"&gt;&lt;/script&gt;
+                    &lt;link rel="import" href="bower_components/sample-polymer/audio-pad.html" /&gt;
+                &lt;/head&gt;
+                &lt;body&gt;
+                    &lt;div class="container"&gt;
+                        &lt;audio-pad&gt;&lt;/audio-pad&gt;
+                    &lt;/div&gt;
+              </code>
+            </pre>
+
+        <p>...and pass your element an <a href="">audio context</a> and the url to your sample after the 'polymer-ready' event has fired.</p>
+            <pre>
+              <code class="language-javascript">
+                window.addEventListener('polymer-ready', function(evt) {
+                  var pad = document.querySelector('audio-pad');
+                  var audioContext = generateAudioContext();
+                  pad.audioContext = audioContext;
+                  pad.url = 'path/to/your/sample.wav';
+
+                  // play the sound
+                  pad.play();
+                }
+              </code>
+            </pre>
+
+        </div>
+
+
+      <a href="https://github.com/meandavejustice/sample-polymer"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+
+      <script type="text/javascript" src="bower_components/highlightjs/highlight.pack.js"></script>
+      <script type="text/javascript">
+        hljs.initHighlightingOnLoad();
+         function generateAudioContext() {
+           var context;
+
+           if (typeof AudioContext !== "undefined") {
+             context = new AudioContext();
+           } else if (typeof webkitAudioContext !== "undefined") {
+             context = new webkitAudioContext();
+           } else {
+             throw new Error('AudioContext not supported. :(');
+           }
+
+           return context;
+         }
+
+         window.addEventListener('polymer-ready', function(evt) {
+           var pads = document.querySelectorAll('audio-pad');
+           var audioContext = generateAudioContext();
+           var basePath = 'sounds/';
+
+           function setPads(idx) {
+             if (idx > pads.length - 1) return;
+             pads[idx].audioContext = audioContext;
+             pads[idx].url = basePath + idx + '.wav';
+             setPads(idx + 1);
+           }
+
+           setPads(0);
+
+           document.querySelector('.state').innerText = 'READY!!';
+           console.log('ready!!');
+         });
+        </script>
+    </body>
+</html>
