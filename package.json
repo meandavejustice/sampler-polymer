@@ -1,0 +1,25 @@
+{
+  "name": "sampler-polymer",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/meandavejustice/sampler-polymer.git"
+  },
+  "keywords": [
+    "webaudio",
+    "sampler",
+    "mpc",
+    "audio",
+    ""
+  ],
+  "author": "Dave Justice",
+  "license": "MIT",
+  "dependencies": {
+    "connect": "~2.8.5"
+  }
+}

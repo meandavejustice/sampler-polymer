@@ -1,0 +1,8 @@
+{
+  "name": "sampler-polymer",
+  "dependencies": {
+    "mousetrap": "~1.4.4",
+    "polymer": "~0.2.2",
+    "polymer-ajax": "Polymer/polymer-ajax#~0.2.3"
+  }
+}
