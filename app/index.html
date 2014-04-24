@@ -17,29 +17,6 @@
     <body>
         <div class="container">
           <audio-pad></audio-pad>
-          <!-- <div class="mpc"> -->
-          <!--     <section class="pads"> -->
-          <!--       <ul> -->
-          <!--         <> -->
-          <!--         <li class='pad' draggable =true ></li> -->
-          <!--         <li class='pad' draggable =true ></li> -->
-          <!--         <li class='pad' draggable =true ></li> -->
-          <!--         <li class='pad' draggable =true ></li> -->
-          <!--         <li class='pad' draggable =true ></li> -->
-          <!--         <li class='pad'></li> -->
-          <!--         <li class='pad'></li> -->
-          <!--         <li class='pad'></li> -->
-          <!--         <li class='pad'></li> -->
-          <!--         <li class='pad'></li> -->
-          <!--         <li class='pad'></li> -->
-          <!--         <li class='pad'></li> -->
-          <!--         <li class='pad'></li> -->
-          <!--         <li class='pad'></li> -->
-          <!--         <li class='pad'></li> -->
-          <!--         <li class='pad'></li> -->
-          <!--       </ul> -->
-          <!--     </section> -->
-          <!--   </div> -->
         </div>
 
         <!--[if lt IE 7]>
@@ -47,8 +24,29 @@
         <![endif]-->
 
         <!-- build:js scripts/main.js -->
-        <script src="vendor/mousetrap/mousetrap.min.js"></script>
-	      <script src="scripts/main.js"></script>
+        <script type="text/javascript">
+         function generateAudioContext() {
+           var context;
+
+           if (typeof AudioContext !== "undefined") {
+             context = new AudioContext();
+           } else if (typeof webkitAudioContext !== "undefined") {
+             context = new webkitAudioContext();
+           } else {
+             throw new Error('AudioContext not supported. :(');
+           }
+
+           return context;
+         }
+
+         window.addEventListener('polymer-ready', function(evt) {
+           var pad = document.querySelector('audio-pad');
+           var audioContext = generateAudioContext();
+           pad.audioContext = audioContext;
+           pad.url = '../../examples/1.wav';
+           console.log('ready!!');
+         });
+        </script>
         
 	<!-- endbuild -->
 </body>

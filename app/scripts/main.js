@@ -52,7 +52,7 @@ pad.prototype.onLoaded = function(source) {
 pad.prototype.play = function() {
   if (this.needBuffer()) {
     var self = this;
-    loadSound(this.url, function(src) { self.onLoaded.call(self, src) });
+    loadSound(this.url, gfunction(src) { self.onLoaded.call(self, src) });
   } else {
     this.onLoaded(this.buffer);
   }

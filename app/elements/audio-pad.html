@@ -1,7 +1,8 @@
 <link rel="import" href="../vendor/polymer/polymer.html" />
-<link rel="import" href="../vendor/polymer-ajax/polymer-ajax.html" />
+<!-- <link rel="import" href="../vendor/polymer-ajax/polymer-ajax.html" /> -->
 
-<polymer-element name="audio-pad" noscript>
+<polymer-element name="audio-pad" on-click="{{buttonClick}}" on-drop="{{dropHandler}}"
+                 on-dragover="{{noop}}" on-dragenter="{{noop}}">
   <template>
     <!-- <polymer-ajax url="" auto response=""></p> -->
     <style>
@@ -26,5 +27,85 @@
      }
     </style>
   </template>
-</polymer-element>
 
+  <script>
+   Polymer('audio-pad', {
+     ready: function() {
+       this.triggerKey = '';
+       this.url = '';
+       this.source = undefined;
+       this.buffer = undefined;
+       this.audioContext = undefined;
+     },
+     needBuffer: function() {
+       return this.buffer === undefined;
+     },
+     keypressHandler: function(evt, detail, sender) {
+       evt.preventDefault();
+       return false;
+     },
+     dropHandler: function(evt, detail, sender) {
+       this.uploader(evt);
+     },
+     noop: function(evt) {
+       if (evt.preventDefault) {
+         evt.preventDefault();
+       }
+
+       return false;
+     },
+     loadSound: function(url, cb) {
+       var req = new XMLHttpRequest();
+       req.open('GET', url, true);
+       req.responseType = 'arraybuffer';
+       var self = this;
+       req.onloadend = function() {
+         self.decode.call(self, req.response, cb);
+       };
+       req.send();
+     },
+     buttonClick: function(evt, detail, sender) {
+       this.play();
+     },
+     onLoaded: function(source) {
+       this.buffer = source;
+       this.source = this.audioContext.createBufferSource();
+       this.source.buffer = this.buffer;
+       this.source.connect(this.audioContext.destination);
+       this.playSound();
+     },
+     playSound: function() {
+       this.source.noteOn(this.audioContext.currentTime);
+     },
+     play: function() {
+       if (this.needBuffer()) {
+         var self = this;
+         this.loadSound(this.url, function(data) {
+           self.onLoaded.call(self, data);
+         });
+       } else {
+         this.onLoaded(this.buffer);
+       }       
+     },
+     stop: function() {
+       this.source.noteOff(this.audioContext.currentTime);
+     },
+     decode: function(data, success, error) {
+       this.audioContext.decodeAudioData(data, success, error);
+     },
+     uploader: function(evt) {
+       if (evt.preventDefault) evt.preventDefault();
+       var reader = new FileReader();
+       reader.onloadend = function(src) {
+         if (!src.target.result) return;
+         var self = this;
+         this.decode(src.target.result, function(data) {
+           debugger;
+           self.onLoaded.call(self, data);
+         });
+       };
+       reader.readAsArrayBuffer(evt.dataTransfer.files[0]);
+     }
+   });
+  </script>
+</polymer-element>
