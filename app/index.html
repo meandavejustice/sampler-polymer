@@ -16,6 +16,7 @@
             <audio-pad></audio-pad>
             <audio-pad></audio-pad>
             <audio-pad></audio-pad>
+            <h4 class="state"></h4>
         </div>
 
         <script type="text/javascript">
@@ -46,6 +47,8 @@
            }
 
            setPads(0);
+
+           document.querySelector('.state').innerText = 'READY!!';
            console.log('ready!!');
          });
         </script>

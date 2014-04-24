@@ -3,4 +3,8 @@
 An experiment with polymer elements. The goal is to have a `audio-pad` element
 with much of the same functionality from my [simple-sampler](https://github.com/meandavejustice/simple-sampler) project.
 
-There's nothing here yet except a styled element. Don't bother looking at the code yet plz.
+to run locally:
+* `npm i`
+* `bower install`
+* `node server.js`
+* visit [http://localhost:8180](http://localhost:8180)
