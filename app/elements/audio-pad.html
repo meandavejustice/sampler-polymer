@@ -1,10 +1,8 @@
 <link rel="import" href="../vendor/polymer/polymer.html" />
-<!-- <link rel="import" href="../vendor/polymer-ajax/polymer-ajax.html" /> -->
 
 <polymer-element name="audio-pad" on-click="{{buttonClick}}" on-drop="{{dropHandler}}"
                  on-dragover="{{noop}}" on-dragenter="{{noop}}">
   <template>
-    <!-- <polymer-ajax url="" auto response=""></p> -->
     <style>
      :host {
          box-sizing: border-box;
@@ -100,7 +98,6 @@
          if (!src.target.result) return;
          var self = this;
          this.decode(src.target.result, function(data) {
-           debugger;
            self.onLoaded.call(self, data);
          });
        };
