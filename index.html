@@ -46,6 +46,9 @@ web-audio apps. It has been modelled after the original designs of Akai's Mpc li
                   pad.audioContext = audioContext;
                   pad.url = 'path/to/your/sample.wav';
 
+                  // preload the sound without playing
+                  pad.loadSilent();
+
                   // play the sound
                   pad.play();
                 }
@@ -83,6 +86,7 @@ web-audio apps. It has been modelled after the original designs of Akai's Mpc li
              if (idx > pads.length - 1) return;
              pads[idx].audioContext = audioContext;
              pads[idx].url = basePath + idx + '.wav';
+             pads[idx].loadSilent();
              setPads(idx + 1);
            }
 

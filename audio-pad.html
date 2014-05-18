@@ -13,7 +13,8 @@
          border-right: 4px solid darkgray;
          border-bottom: 4px solid darkgray;
          border-radius: 6px;
-         background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(0, 0, 0, 0.65)), color-stop(100%, rgba(0, 0, 0, 0)));
+         background: radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+         background: -moz-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
          background: -webkit-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
          -webkit-user-select: none;
      }
@@ -65,15 +66,22 @@
      buttonClick: function(evt, detail, sender) {
        this.play();
      },
-     onLoaded: function(source) {
+     onLoaded: function(source, silent) {
        this.buffer = source;
        this.source = this.audioContext.createBufferSource();
        this.source.buffer = this.buffer;
        this.source.connect(this.audioContext.destination);
-       this.playSound();
+       if (!silent) this.playSound();
      },
      playSound: function() {
-       this.source.noteOn(this.audioContext.currentTime);
+       this.source.start(this.audioContext.currentTime);
+     },
+     loadSilent: function() {
+       if (!this.needBuffer()) return;
+       var self = this;
+       this.loadSound(this.url, function(data) {
+         self.onLoaded.call(self, data, true);
+       });
      },
      play: function() {
        if (this.needBuffer()) {
@@ -86,7 +94,7 @@
        }       
      },
      stop: function() {
-       this.source.noteOff(this.audioContext.currentTime);
+       this.source.stop(this.audioContext.currentTime);
      },
      decode: function(data, success, error) {
        this.audioContext.decodeAudioData(data, success, error);
